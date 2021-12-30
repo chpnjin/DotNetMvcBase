@@ -1,0 +1,184 @@
+2021-12-04 07:37:47,606 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 JQWEB.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 09:49:07,046 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 09:51:42,667 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 09:55:07,154 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 09:58:27,078 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 10:52:12,158 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Table 'web.log_notice_have_read' doesn't exist
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 10:52:12,158 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:Authentication to host '192.168.153.247' failed.
+   於 MySql.Data.Common.Ssl.StartSSL(Stream& baseStream, Encoding encoding, String connectionString)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 10:52:41,864 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 10:52:43,355 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Authentication to host '192.168.153.247' failed.
+   於 MySql.Data.Common.Ssl.StartSSL(Stream& baseStream, Encoding encoding, String connectionString)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 10:53:03,355 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 10:53:03,355 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Authentication to host '192.168.153.247' failed.
+   於 MySql.Data.Common.Ssl.StartSSL(Stream& baseStream, Encoding encoding, String connectionString)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 10:59:24,296 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Unable to connect to any of the specified MySQL hosts.
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 10:59:24,296 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 11:00:17,006 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 11:07:41,819 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:Got timeout reading communication packets
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.MySqlStream.SendPacket(MySqlPacket packet)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 11:07:41,819 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_unicode_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 
+2021-12-04 11:07:41,819 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Got timeout reading communication packets
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.MySqlStream.SendPacket(MySqlPacket packet)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 11:11:02,716 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Authentication to host '192.168.153.247' failed.
+   於 MySql.Data.Common.Ssl.StartSSL(Stream& baseStream, Encoding encoding, String connectionString)
+   於 MySql.Data.MySqlClient.NativeDriver.Open()
+   於 MySql.Data.MySqlClient.Driver.Open()
+   於 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   於 MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+   於 MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+   於 MySql.Data.MySqlClient.MySqlPool.GetConnection()
+   於 MySql.Data.MySqlClient.MySqlConnection.Open()
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 116 
+2021-12-04 11:11:02,717 [::1] - API URL:/api/Log/GetNoticeByUser / 錯誤內容:Illegal mix of collations (utf8mb4_general_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 WebBase.Models.DAO.Query() 於 D:\Solution\WebBase\SourceCode\Models\DAO.cs: 行 131 

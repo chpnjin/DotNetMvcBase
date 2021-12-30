@@ -1,0 +1,7 @@
+2021-12-21 07:54:57,027 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   於 MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.Common.StreamCreator.GetStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.MySqlClient.NativeDriver.Open() 
+2021-12-21 07:57:40,452 [::1] - API URL:/api/ApiLogin/GetCurrentSingInCount / 錯誤內容:Unknown database 'mcs'
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacket() 

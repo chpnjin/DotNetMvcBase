@@ -1,0 +1,17 @@
+﻿{
+  "add": "新增",
+  "edit": "編輯",
+  "delete": "刪除",
+  "y": "是",
+  "n": "否",
+  "prompt": "提示",
+  "receiveAlarm": "收到警報通知",
+  "succeed": "操作成功",
+  "ok": "確定",
+  "cancel": "取消",
+  "error": "錯誤",
+  "dateRangeError": "日期範圍輸入錯誤",
+  "confirm": "確定",
+  "delMsg": "是否確認刪除?",
+  "idleTimeout": "閒置逾時，請重新登入"
+}

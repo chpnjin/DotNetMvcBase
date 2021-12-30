@@ -1,0 +1,90 @@
+2021-12-15 17:53:58,171 [::1] - API URL:/api/Global/GetGlobalParam / 錯誤內容:Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   於 MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.Common.StreamCreator.GetStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.MySqlClient.NativeDriver.Open() 
+2021-12-15 17:56:12,941 [::1] - API URL:/api/Global/GetGlobalParam / 錯誤內容:Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   於 MySql.Data.Common.StreamCreator.GetTcpStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.Common.StreamCreator.GetStream(MySqlConnectionStringBuilder settings, MyNetworkStream& networkStream)
+   於 MySql.Data.MySqlClient.NativeDriver.Open() 
+2021-12-15 17:58:04,456 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 JQWEB.Models.DAO.Query() 於 D:\Solutions\JQWEB\SourceCode\Models\DAO.cs: 行 150 
+2021-12-15 18:00:11,517 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   於 JQWEB.Models.DAO.Query() 於 D:\Solutions\JQWEB\SourceCode\Models\DAO.cs: 行 150 
+2021-12-15 18:00:23,331 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Timeout in IO operation
+   於 MySql.Data.MySqlClient.TimedStream.StopTimer()
+   於 MySql.Data.MySqlClient.TimedStream.Read(Byte[] buffer, Int32 offset, Int32 count)
+   於 MySql.Data.MySqlClient.MySqlStream.ReadFully(Stream stream, Byte[] buffer, Int32 offset, Int32 count)
+   於 MySql.Data.MySqlClient.MySqlStream.LoadPacket()
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   於 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   於 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   於 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior) 
+2021-12-15 18:21:10,082 [::1] - API URL:/api/Global/GetParamsByFunction / 錯誤內容:Got timeout reading communication packets
+   於 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   於 MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin.ReadPacket() 
+2021-12-15 18:21:10,083 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:序列未包含項目
+   於 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   於 JQWEB.Models.SYS_FUNCTION.ConvertNavTree(DataTable origin) 於 D:\Solutions\JQWEB\SourceCode\Models\SYS_FUNCTION.cs: 行 177
+   於 JQWEB.Controllers.LayoutController.GetSideBarItems(JObject obj) 於 D:\Solutions\JQWEB\SourceCode\Controllers\HomeController.cs: 行 118
+   於 lambda_method(Closure , Object , Object[] )
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass6_2.<GetExecutor>b__2(Object instance, Object[] methodParameters)
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__1.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__5.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__15.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__15.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.HttpServer.<SendAsync>d__24.MoveNext() 
+2021-12-15 18:22:31,740 [::1] - API URL:/api/Layout/GetSideBarItems / 錯誤內容:序列未包含項目
+   於 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   於 JQWEB.Models.SYS_FUNCTION.ConvertNavTree(DataTable origin) 於 D:\Solutions\JQWEB\SourceCode\Models\SYS_FUNCTION.cs: 行 177
+   於 JQWEB.Controllers.LayoutController.GetSideBarItems(JObject obj) 於 D:\Solutions\JQWEB\SourceCode\Controllers\HomeController.cs: 行 118
+   於 lambda_method(Closure , Object , Object[] )
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass6_2.<GetExecutor>b__2(Object instance, Object[] methodParameters)
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
+   於 System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ExecuteAsync(HttpControllerContext controllerContext, IDictionary`2 arguments, CancellationToken cancellationToken)
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__1.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__5.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__15.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__15.MoveNext()
+--- 先前擲回例外狀況之位置中的堆疊追蹤結尾 ---
+   於 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   於 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   於 System.Web.Http.HttpServer.<SendAsync>d__24.MoveNext() 
