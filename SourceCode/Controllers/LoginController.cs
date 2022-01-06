@@ -36,7 +36,7 @@ namespace WebBase.Controllers
             string clientIP = System.Web.HttpContext.Current.Request.UserHostAddress;
             if (!string.IsNullOrEmpty(clientIP))
             {
-                var dao = new DAO();
+                var dao = new MySQL();
                 var sqlCreator = new Login();
                 var parmObj = new JObject();
 
@@ -64,7 +64,7 @@ namespace WebBase.Controllers
     public class ApiLoginController : ApiController
     {
         DataTableExtensions dt_ext = new DataTableExtensions();
-        DAO dao = new DAO();
+        MySQL dao = new MySQL();
 
         /// <summary>
         /// 登入驗證
@@ -91,7 +91,7 @@ namespace WebBase.Controllers
             }
 
             string sqlStr = login.GetSqlStr("GetLoginInfoByIP");
-            MySqlParameter[] sqlParms = login.CreateParameterAry(
+            var sqlParms = login.CreateParameterAry(
                 new JObject() {
                     new JProperty("IP", HttpContext.Current.Request.UserHostAddress)
                 });

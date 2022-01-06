@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using MySql.Data.MySqlClient;
+using WebBase.Global;
 using System.Configuration;
 using System.Runtime.InteropServices;
-using WebBase.Global;
 
 namespace WebBase.Models
 {
     /// <summary>
     /// 資料存取底層
     /// </summary>
-    public class DAO
+    public class MySQL : IDAO
     {
         /// <summary>
         /// 連線字串
         /// </summary>
-        protected string connectString { get; set; }
+        string IDAO.connectString { get; set; }
+        string connectString { get; set; }
         protected MySqlConnection conn;
         protected MySqlCommand cmd;
 
@@ -30,7 +31,7 @@ namespace WebBase.Models
         /// 建構式:連線字串預設抓Web.config的connString值
         /// </summary>
         /// <param name="connStr">[可選]連線字串,未設定時抓web.config的connString</param>
-        public DAO([Optional] string connStr)
+        public MySQL([Optional] string connStr)
         {
             if(connStr == null)
             {
@@ -44,18 +45,6 @@ namespace WebBase.Models
             ExecuteList = new List<ExecuteItem>();
         }
 
-        /// <summary>
-        /// 新增SQL執行項目至列表
-        /// </summary>
-        /// <param name="sqlStr">要執行的SQL指令(包含@開頭的具名參數)</param>
-        /// <param name="parameters">參數設定清單</param>
-        public void AddExecuteItem(string sqlStr, MySqlParameter[] parameters)
-        {
-            ExecuteItem newItem = new ExecuteItem();
-            newItem.sqlStr = sqlStr;
-            newItem.parameterList = parameters;
-            ExecuteList.Add(newItem);
-        }
 
         /// <summary>
         /// 以交易方式依序執行SQL執行列表項目,發生錯誤時會RollBack至執行第一個項目前的狀態,無論有無成功均會清除SQL執行列表中的所有項目
@@ -96,6 +85,7 @@ namespace WebBase.Models
                         throw ex;
                     }
                 }
+                result = true;
             }
             catch (Exception ex)
             {
@@ -179,14 +169,26 @@ namespace WebBase.Models
             return ds;
         }
 
+        /// <summary>
+        /// 新增SQL執行項目至列表
+        /// </summary>
+        /// <param name="sqlStr">要執行的SQL指令(包含@開頭的具名參數)</param>
+        /// <param name="parameters">參數設定清單</param>
+        public void AddExecuteItem(string sqlStr, IDataParameter[] parameters)
+        {
+            ExecuteItem newItem = new ExecuteItem();
+            newItem.sqlStr = sqlStr;
+            newItem.parameterList = (MySqlParameter[])parameters;
+            ExecuteList.Add(newItem);
+        }
 
         /// <summary>
         /// 傳入帶有@開頭參數的SQL與對應參數列表,回傳DB真正執行的SQL
         /// </summary>
         /// <param name="withParmSqlStr">帶有具名參數的SQL string</param>
         /// <param name="parameters">參數對應表</param>
-        /// <returns></returns>
-        public string CreateSqlStr(string withParmSqlStr, MySqlParameter[] parameters)
+        /// <returns>完整SQL</returns>
+        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
         {
             string sqlStr = withParmSqlStr;
 
@@ -203,21 +205,5 @@ namespace WebBase.Models
 
             return sqlStr;
         }
-    }
-
-    /// <summary>
-    /// SQL執行內容項目設定
-    /// </summary>
-    public class ExecuteItem
-    {
-        /// <summary>
-        /// SQL指令
-        /// </summary>
-        public string sqlStr { get; set; }
-        /// <summary>
-        /// 該SQL指令對應參數表
-        /// </summary>
-        public MySqlParameter[] parameterList { get; set; }
-
     }
 }

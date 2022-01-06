@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -20,7 +21,7 @@ namespace WebBase.Models
         /// </summary>
         /// <param name="input">JSON格式Key/Value參數</param>
         /// <returns>MySqlParameter陣列</returns>
-        public MySqlParameter[] CreateParameterAry(JObject input);
+        public IDataParameter[] CreateParameterAry(JObject input);
         /// <summary>
         /// 取得SQL字串
         /// </summary>

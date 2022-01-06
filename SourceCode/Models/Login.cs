@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -17,7 +18,7 @@ namespace WebBase.Models
         string login { get { return "LOG_LOGIN"; } }
         string loginHist { get { return "LOG_LOGIN_HIST"; } }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             if (input is null)
             {

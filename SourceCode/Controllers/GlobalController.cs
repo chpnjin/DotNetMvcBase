@@ -35,7 +35,7 @@ namespace WebBase.Controllers
         [HttpPost]
         public JObject GetDropDownListItems(JObject obj)
         {
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             SYS_PARAM sqlCreator = new SYS_PARAM();
             DataTableExtensions extensions = new DataTableExtensions();
 
@@ -55,7 +55,7 @@ namespace WebBase.Controllers
         [HttpPost]
         public JObject GetGlobalParam()
         {
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             SYS_PARAM sqlCreator = new SYS_PARAM();
             DataTableExtensions extensions = new DataTableExtensions();
             JObject obj = new JObject();
@@ -91,7 +91,7 @@ namespace WebBase.Controllers
         [HttpPost]
         public JObject GetBreadcrumb(JObject obj)
         {
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             SYS_FUNCTION sqlCreator = new SYS_FUNCTION();
             DataTableExtensions extensions = new DataTableExtensions();
 
@@ -107,7 +107,7 @@ namespace WebBase.Controllers
         [HttpPost]
         public JObject GetHelpFile(JObject obj)
         {
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             SYS_FUNCTION sqlCreator = new SYS_FUNCTION();
             JObject filePath = new JObject();
 
@@ -144,7 +144,7 @@ namespace WebBase.Controllers
         [HttpPost]
         public JArray GetParamsByFunction(JObject obj)
         {
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             SYS_PARAM sqlCreator = new SYS_PARAM();
             DataTableExtensions extensions = new DataTableExtensions();
 

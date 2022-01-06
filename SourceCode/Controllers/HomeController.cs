@@ -27,7 +27,7 @@ namespace WebBase.Controllers
         [System.Web.Http.HttpPost]
         public ActionResult Logout(string LoginGuid = null, string UserGuid = null)
         {
-            var dao = new DAO();
+            var dao = new MySQL();
             var sqlCreator = new Login();
             var parmObj = new JObject();
             string clientIP = string.Empty;
@@ -101,7 +101,7 @@ namespace WebBase.Controllers
             GroupUser groupUser = new GroupUser();
             SYS_FUNCTION function = new SYS_FUNCTION();
             DataTableExtensions extensions = new DataTableExtensions();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
 
             //1.使用者找所屬群組
             var userGuid = groupUser.CreateParameterAry(obj);
@@ -130,7 +130,7 @@ namespace WebBase.Controllers
             GroupUser groupUser = new GroupUser();
             GroupNavigation groupNavigation = new GroupNavigation();
             DataTableExtensions extensions = new DataTableExtensions();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
 
             //1.使用者找所屬群組
             var userGuid = groupUser.CreateParameterAry(obj);

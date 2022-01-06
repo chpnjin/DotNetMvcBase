@@ -21,7 +21,7 @@ namespace WebBase.Models
             }
         }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             List<MySqlParameter> parmList = new List<MySqlParameter>();
 

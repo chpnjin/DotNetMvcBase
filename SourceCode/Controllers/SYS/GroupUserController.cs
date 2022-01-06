@@ -29,7 +29,7 @@ namespace WebBase.Controllers.SYS
         public JObject CountA(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.QueryA(obj, true);
@@ -46,7 +46,7 @@ namespace WebBase.Controllers.SYS
         public JObject QueryA(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
             dynamic parm = obj as dynamic;
 
@@ -68,7 +68,7 @@ namespace WebBase.Controllers.SYS
         public JObject GetOneByGUID(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.GetOne();
@@ -109,7 +109,7 @@ namespace WebBase.Controllers.SYS
         public JObject InsertA(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.InsertA();
@@ -125,7 +125,7 @@ namespace WebBase.Controllers.SYS
         public JObject UpdateA(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.UpdateA();
@@ -142,7 +142,7 @@ namespace WebBase.Controllers.SYS
         public JObject DeleteA(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.DeleteA();
@@ -164,7 +164,7 @@ namespace WebBase.Controllers.SYS
         public JObject QueryBind(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.QueryBind();
@@ -185,7 +185,7 @@ namespace WebBase.Controllers.SYS
         public JObject InsertBind(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
             JArray ary = JArray.FromObject(obj["BindGuids"]);
 
@@ -214,7 +214,7 @@ namespace WebBase.Controllers.SYS
         public JObject DeleteBind(JObject obj)
         {
             GroupUser sqlCreator = new GroupUser();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.DeleteBind();

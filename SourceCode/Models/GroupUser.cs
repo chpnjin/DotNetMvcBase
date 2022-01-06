@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,7 +16,7 @@ namespace WebBase.Models
         public string TableB { get { return "SYS_USER"; } }
         public string BindTable { get { return "SYS_USER_GROUP"; } }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             if (input is null)
             {

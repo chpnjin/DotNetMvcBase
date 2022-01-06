@@ -31,7 +31,7 @@ namespace WebBase.Controllers
         public JObject Count(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.Search(obj, true);
@@ -56,7 +56,7 @@ namespace WebBase.Controllers
         public JObject Query(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
             dynamic parm = obj as dynamic;
 
@@ -83,7 +83,7 @@ namespace WebBase.Controllers
         public JObject GetOneByGUID(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.GetOneByGUID();
@@ -105,7 +105,7 @@ namespace WebBase.Controllers
         public JObject Export(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             EXCEL excel = new EXCEL();
             JObject returnMessage = new JObject();
             string controllerName = ControllerContext.RouteData.Values["controller"].ToString().Replace("Api", null);
@@ -134,7 +134,7 @@ namespace WebBase.Controllers
         public JObject Insert(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.Insert();
@@ -155,7 +155,7 @@ namespace WebBase.Controllers
         public JObject Update(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.Update();
@@ -177,7 +177,7 @@ namespace WebBase.Controllers
         public JObject Delete(JObject obj)
         {
             Department sqlCreator = new Department();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.Delete();

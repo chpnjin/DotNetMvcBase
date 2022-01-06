@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -25,7 +26,7 @@ namespace WebBase.Models
 
         string apiLogTable { get { return "log_api"; } }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             List<MySqlParameter> parmList = new List<MySqlParameter>();
 

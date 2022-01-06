@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace WebBase.Models
         /// </summary>
         /// <param name="input">前端輸入值</param>
         /// <returns></returns>
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             if (input is null)
             {

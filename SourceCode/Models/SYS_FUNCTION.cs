@@ -20,7 +20,7 @@ namespace WebBase.Models
             }
         }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {if (input is null)
             {
                 return new MySqlParameter[] { };

@@ -21,7 +21,7 @@ namespace WebBase.Controllers
         public JObject SaveEventLog(JObject obj)
         {
             LOG sqlCreator = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             JObject returnVal = new JObject();
 
             var getGroupIdStr = sqlCreator.GetSqlStr("GetTopOneUserGroup");
@@ -52,7 +52,7 @@ namespace WebBase.Controllers
         public JObject GetSqlStringByAction(JObject obj)
         {
             ISqlCreator sqlStrCreater; //建立SQL字串介面
-            DAO dao = new DAO();　//DB存取介面
+            MySQL dao = new MySQL();　//DB存取介面
             InputDataProcessor processor = new InputDataProcessor();
             JObject conditions = (JObject)obj.GetValue("params");
             JObject returnVal = new JObject();
@@ -90,7 +90,7 @@ namespace WebBase.Controllers
         public void SaveSqlPerformanceLog(JObject obj)
         {
             LOG sqlCreator = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             InputDataProcessor processor = new InputDataProcessor();
 
             //SQL解密
@@ -124,7 +124,7 @@ namespace WebBase.Controllers
         {
             LOG sqlCreator = new LOG();
             DataTableExtensions extensions = new DataTableExtensions();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
 
             var sqlStr = sqlCreator.GetSqlStr("GetTodayActionLogByUser");
             var sqlParms = sqlCreator.CreateParameterAry(obj);
@@ -145,7 +145,7 @@ namespace WebBase.Controllers
         public JObject InsertNotice(JObject obj)
         {
             LOG sqlCreator = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             JObject returnVal = new JObject();
 
             var noticeType = obj.GetValue("type").ToString();
@@ -177,7 +177,7 @@ namespace WebBase.Controllers
         public JArray GetNoticeByUser(JObject obj)
         {
             LOG sqlCreator = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
 
             var sqlStr = sqlCreator.GetSqlStr("QueryNoticeByUser");
             var sqlParms = sqlCreator.CreateParameterAry(obj);
@@ -197,7 +197,7 @@ namespace WebBase.Controllers
         public JObject UpdateReadStatus(JObject obj)
         {
             LOG sqlCreator = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             JObject returnVal = new JObject();
 
             var sqlStr = sqlCreator.GetSqlStr("AddReadNoticeLog");
@@ -220,7 +220,7 @@ namespace WebBase.Controllers
         public JObject AddApiLog(JObject obj)
         {
             LOG log = new LOG();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             JObject returnVal = new JObject();
 
             var sqlStr = log.GetSqlStr("InsertToApiLog");

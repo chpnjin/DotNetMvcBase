@@ -15,7 +15,7 @@ namespace WebBase.Models
         public string TableB { get { return "SYS_NAVIGATION"; } }
         public string BindTable { get { return "SYS_GROUP_NAVIGATION"; } }
 
-        public MySqlParameter[] CreateParameterAry(JObject input)
+        public IDataParameter[] CreateParameterAry(JObject input)
         {
             if (input is null)
             {

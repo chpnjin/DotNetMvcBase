@@ -24,7 +24,7 @@ namespace WebBase.Controllers.SYS
         public JObject QueryA(JObject obj)
         {
             GroupFunction sqlCreator = new GroupFunction();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
             dynamic parm = obj as dynamic;
 
@@ -51,7 +51,7 @@ namespace WebBase.Controllers.SYS
         public JObject CountA(JObject obj)
         {
             GroupFunction sqlCreator = new GroupFunction();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.QueryA(obj, true);
@@ -72,7 +72,7 @@ namespace WebBase.Controllers.SYS
         public JObject QueryB(JObject obj)
         {
             SYS_FUNCTION sqlCreator = new SYS_FUNCTION();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.GetFunctionList(obj.GetValue("sort").ToString());
@@ -94,7 +94,7 @@ namespace WebBase.Controllers.SYS
         public JObject QueryBind(JObject obj)
         {
             GroupFunction sqlCreator = new GroupFunction();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             DataTableExtensions extensions = new DataTableExtensions();
 
             var sqlStr = sqlCreator.QueryBind();
@@ -115,7 +115,7 @@ namespace WebBase.Controllers.SYS
         public JObject InsertBind(JObject obj)
         {
             GroupFunction sqlCreator = new GroupFunction();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
             JArray ary = JArray.FromObject(obj["BindGuids"]);
 
@@ -144,7 +144,7 @@ namespace WebBase.Controllers.SYS
         public JObject DeleteBind(JObject obj)
         {
             GroupFunction sqlCreator = new GroupFunction();
-            DAO dao = new DAO();
+            MySQL dao = new MySQL();
             dynamic returnMsg = new JObject();
 
             var sqlStr = sqlCreator.DeleteBind();
