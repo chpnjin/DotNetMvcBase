@@ -35,7 +35,7 @@ namespace WebBase.Models
         {
             if(connStr == null)
             {
-                connectString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+                connectString = ConfigurationManager.ConnectionStrings["connStr_MySQL"].ConnectionString;
             }
             else
             {
@@ -45,6 +45,18 @@ namespace WebBase.Models
             ExecuteList = new List<ExecuteItem>();
         }
 
+        /// <summary>
+        /// 新增SQL執行項目至列表
+        /// </summary>
+        /// <param name="sqlStr">要執行的SQL指令(包含@開頭的具名參數)</param>
+        /// <param name="parameters">參數設定清單</param>
+        public void AddExecuteItem(string sqlStr, IDataParameter[] parameters)
+        {
+            ExecuteItem newItem = new ExecuteItem();
+            newItem.sqlStr = sqlStr;
+            newItem.parameterList = (MySqlParameter[])parameters;
+            ExecuteList.Add(newItem);
+        }
 
         /// <summary>
         /// 以交易方式依序執行SQL執行列表項目,發生錯誤時會RollBack至執行第一個項目前的狀態,無論有無成功均會清除SQL執行列表中的所有項目
@@ -167,43 +179,6 @@ namespace WebBase.Models
             }
 
             return ds;
-        }
-
-        /// <summary>
-        /// 新增SQL執行項目至列表
-        /// </summary>
-        /// <param name="sqlStr">要執行的SQL指令(包含@開頭的具名參數)</param>
-        /// <param name="parameters">參數設定清單</param>
-        public void AddExecuteItem(string sqlStr, IDataParameter[] parameters)
-        {
-            ExecuteItem newItem = new ExecuteItem();
-            newItem.sqlStr = sqlStr;
-            newItem.parameterList = (MySqlParameter[])parameters;
-            ExecuteList.Add(newItem);
-        }
-
-        /// <summary>
-        /// 傳入帶有@開頭參數的SQL與對應參數列表,回傳DB真正執行的SQL
-        /// </summary>
-        /// <param name="withParmSqlStr">帶有具名參數的SQL string</param>
-        /// <param name="parameters">參數對應表</param>
-        /// <returns>完整SQL</returns>
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            string sqlStr = withParmSqlStr;
-
-            foreach (var item in parameters)
-            {
-                //參數資料型態不為數字時轉換值須加引號
-                if (item.DbType != DbType.Int32)
-                {
-                    item.Value = "'" + item.Value + "'";
-                }
-
-                sqlStr = sqlStr.Replace(item.ParameterName, item.Value.ToString());
-            }
-
-            return sqlStr;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace WebBase.Models
         {
             if (connStr == null)
             {
-                connectString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+                connectString = ConfigurationManager.ConnectionStrings["connStr_SQLite"].ConnectionString;
             }
             else
             {
@@ -61,24 +61,6 @@ namespace WebBase.Models
             newItem.sqlStr = sqlStr;
             newItem.parameterList = (SqliteParameter[])parameters;
             ExecuteList.Add(newItem);
-        }
-
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            string sqlStr = withParmSqlStr;
-
-            foreach (var item in parameters)
-            {
-                //參數資料型態不為數字時轉換值須加引號
-                if (item.DbType != DbType.Int32)
-                {
-                    item.Value = "'" + item.Value + "'";
-                }
-
-                sqlStr = sqlStr.Replace(item.ParameterName, item.Value.ToString());
-            }
-
-            return sqlStr;
         }
 
         public bool Execute()

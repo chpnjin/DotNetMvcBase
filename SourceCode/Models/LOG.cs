@@ -204,5 +204,10 @@ namespace WebBase.Models
             string sqlStr = $"INSERT INTO {apiLogTable} (GUID,INSERT_TIME,API_HOST_URL,API_ACTION_NAME,SEND_DATA,RESPONSE_DATA) VALUES (UUID(),NOW(),@API_HOST_URL,@API_ACTION_NAME,@SEND_DATA,@RESPONSE_DATA);";
             return sqlStr;
         }
+
+        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

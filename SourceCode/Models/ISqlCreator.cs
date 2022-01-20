@@ -29,5 +29,13 @@ namespace WebBase.Models
         /// <param name="parm">前端傳入參數</param>
         /// <returns>可包含具名參數的SQL字串</returns>
         public string GetSqlStr(string actionName, [Optional] JObject parm);
+
+        /// <summary>
+        /// 傳入帶有具名參數的SQL字串與參數設定陣列,回傳DB真正執行的SQL
+        /// </summary>
+        /// <param name="withParmSqlStr">帶有具名參數的SQL string</param>
+        /// <param name="parameters">參數對應表</param>
+        /// <returns></returns>
+        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters);
     }
 }

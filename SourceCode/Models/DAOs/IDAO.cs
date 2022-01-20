@@ -33,13 +33,6 @@ namespace WebBase.Models
         /// </summary>
         /// <returns>System.Data.DataSet</returns>
         public DataSet Query();
-        /// <summary>
-        /// 傳入帶有@開頭參數的SQL與對應參數列表,回傳DB真正執行的SQL
-        /// </summary>
-        /// <param name="withParmSqlStr">帶有具名參數的SQL string</param>
-        /// <param name="parameters">參數對應表</param>
-        /// <returns></returns>
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters);
     }
 
     /// <summary>
