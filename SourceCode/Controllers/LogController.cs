@@ -256,17 +256,18 @@ namespace WebBase.Controllers
                     //在SQL中有找到變數
                     if(locParmInSql > -1)
                     {
-                        string trueVal;
-                        if (item.DbType == DbType.String)
+                        string strVal = string.Empty;
+                        decimal decimalVal = decimal.Zero;
+
+                        if (decimal.TryParse(item.Value.ToString(),out decimalVal))
                         {
-                            trueVal = "'" + item.Value.ToString() + "'";
+                            sql = sql.Replace(item.ParameterName, decimalVal.ToString());
                         }
                         else
                         {
-                            trueVal = item.Value.ToString();
+                            strVal = "'" + item.Value.ToString() + "'";
+                            sql = sql.Replace(item.ParameterName, strVal);
                         }
-
-                        sql = sql.Replace(item.ParameterName, trueVal);
                     }
                 }
             }
