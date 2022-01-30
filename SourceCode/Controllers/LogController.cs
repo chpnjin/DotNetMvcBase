@@ -8,6 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http;
 using Utility;
+using System.Data;
 
 namespace WebBase.Controllers
 {
@@ -52,7 +53,7 @@ namespace WebBase.Controllers
         public JObject GetSqlStringByAction(JObject obj)
         {
             ISqlCreator sqlStrCreater; //建立SQL字串介面
-            MySQL dao = new MySQL();　//DB存取介面
+            IDAO dao = new MySQL();　//DB存取介面
             InputDataProcessor processor = new InputDataProcessor();
             JObject conditions = (JObject)obj.GetValue("params");
             JObject returnVal = new JObject();
@@ -73,7 +74,7 @@ namespace WebBase.Controllers
 
             sqlStr = sqlStrCreater.GetSqlStr(action, conditions);
 
-            sqlStr = dao.CreateSqlStr(sqlStr, sqlStrCreater.CreateParameterAry(conditions));
+            sqlStr = CreateSqlStr(dao, sqlStr, sqlStrCreater.CreateParameterAry(conditions));
             //SQL加密
             sqlStr = processor.Base64Encrypt(sqlStr, Encoding.UTF8);
 
@@ -232,6 +233,45 @@ namespace WebBase.Controllers
             returnVal.Add("result", result);
 
             return returnVal;
+        }
+
+        /// <summary>
+        /// 傳入帶參數SQL與參數陣列,回傳真實於DB中執行的SQL
+        /// </summary>
+        /// <param name="dao">繼承DAO介面物件,判斷DB類型用</param>
+        /// <param name="sqlWithParameter">帶參數SQL</param>
+        /// <param name="parms">參數設定陣列</param>
+        /// <returns>完整SQL</returns>
+        string CreateSqlStr(IDAO dao,string sqlWithParameter,IDataParameter[] parms)
+        {
+            string sql = sqlWithParameter;
+
+            Console.WriteLine(dao.GetType());
+
+            if (dao.GetType().Name == "MySQL")
+            {
+                foreach (var item in parms)
+                {
+                    int locParmInSql = sqlWithParameter.IndexOf(item.ParameterName);
+                    //在SQL中有找到變數
+                    if(locParmInSql > -1)
+                    {
+                        string trueVal;
+                        if (item.DbType == DbType.String)
+                        {
+                            trueVal = "'" + item.Value.ToString() + "'";
+                        }
+                        else
+                        {
+                            trueVal = item.Value.ToString();
+                        }
+
+                        sql = sql.Replace(item.ParameterName, trueVal);
+                    }
+                }
+            }
+
+            return sql;
         }
     }
 }

@@ -208,10 +208,5 @@ namespace WebBase.Models
                 "WHERE GUID = @GUID;", MasterTable);
             return sqlStr;
         }
-
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

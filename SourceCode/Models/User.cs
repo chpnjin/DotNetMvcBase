@@ -214,10 +214,5 @@ namespace WebBase.Models
             string sqlStr = "UPDATE SYS_USER SET ENABLE = 0,UPDATE_USER = @UPDATE_USER,UPDATE_TIME = now() WHERE GUID = @GUID;";
             return sqlStr;
         }
-
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

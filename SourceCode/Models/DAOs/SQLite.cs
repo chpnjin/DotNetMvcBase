@@ -1,11 +1,11 @@
-﻿using WebBase.Global;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
+using WebBase.Global;
 
 namespace WebBase.Models
 {
@@ -45,7 +45,7 @@ namespace WebBase.Models
         {
             if (connStr == null)
             {
-                connectString = ConfigurationManager.ConnectionStrings["connStr_SQLite"].ConnectionString;
+                connectString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
             }
             else
             {
@@ -61,6 +61,24 @@ namespace WebBase.Models
             newItem.sqlStr = sqlStr;
             newItem.parameterList = (SqliteParameter[])parameters;
             ExecuteList.Add(newItem);
+        }
+
+        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
+        {
+            string sqlStr = withParmSqlStr;
+
+            foreach (var item in parameters)
+            {
+                //參數資料型態不為數字時轉換值須加引號
+                if (item.DbType != DbType.Int32)
+                {
+                    item.Value = "'" + item.Value + "'";
+                }
+
+                sqlStr = sqlStr.Replace(item.ParameterName, item.Value.ToString());
+            }
+
+            return sqlStr;
         }
 
         public bool Execute()
@@ -115,9 +133,7 @@ namespace WebBase.Models
             }
             finally
             {
-                cmd.Dispose();
                 ExecuteList.Clear();
-                if (conn.State != ConnectionState.Closed) conn.Close();
             }
 
             return result;
@@ -172,7 +188,6 @@ namespace WebBase.Models
             finally
             {
                 ExecuteList.Clear();
-                if (conn.State != ConnectionState.Closed) conn.Close();
             }
 
             return ds;

@@ -200,10 +200,5 @@ namespace WebBase.Models
 
             return sqlStr;
         }
-
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
