@@ -229,13 +229,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Global\CustomException.cs" />
     <Compile Include="Global\Filter.cs" />
     <Compile Include="Global\License.cs" />
     <Compile Include="Models\DAOs\MSSQL.cs" />
     <Compile Include="Models\DAOs\MySQL.cs" />
     <Compile Include="Models\DAOs\IDAO.cs" />
-    <Compile Include="Models\DAOs\PostgreSQL.cs" />
     <Compile Include="Models\DAOs\SQLite.cs" />
     <Compile Include="Models\GroupFunction.cs" />
     <Compile Include="Models\GroupNavigation.cs" />

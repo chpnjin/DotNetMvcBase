@@ -1,36 +1,23 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices;
-using WebBase.Global;
+using System.Web;
 
-namespace WebBase.Models
+namespace WebBase.Models.DAOs
 {
-    /// <summary>
-    /// SQLite DB存取工具
-    /// </summary>
-    public class SQLite : IDAO
+    public class MSSQL : IDAO
     {
-        string _connectString;
         /// <summary>
-        /// 連線DB字串
+        /// 連線字串
         /// </summary>
-        public string connectString
-        {
-            get
-            {
-                return _connectString;
-            }
-            set
-            {
-                _connectString = value;
-            }
-        }
-        protected SqliteConnection conn;
-        protected SqliteCommand cmd;
+        string IDAO.connectString { get; set; }
+        string connectString { get; set; }
+        protected SqlConnection conn;
+        protected SqlCommand cmd;
 
         /// <summary>
         /// 排定SQL執行列表項目
@@ -41,11 +28,11 @@ namespace WebBase.Models
         /// 建構式:連線字串預設抓Web.config的connString值
         /// </summary>
         /// <param name="connStr">[可選]連線字串,未設定時抓web.config的connString</param>
-        public SQLite([Optional] string connStr)
+        public MSSQL([Optional] string connStr)
         {
             if (connStr == null)
             {
-                connectString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
+                connectString = ConfigurationManager.ConnectionStrings["connStr_MSSQL"].ConnectionString;
             }
             else
             {
@@ -55,37 +42,28 @@ namespace WebBase.Models
             ExecuteList = new List<ExecuteItem>();
         }
 
+        /// <summary>
+        /// 新增SQL執行項目至列表
+        /// </summary>
+        /// <param name="sqlStr">要執行的SQL指令(包含@開頭的具名參數)</param>
+        /// <param name="parameters">參數設定清單</param>
         public void AddExecuteItem(string sqlStr, IDataParameter[] parameters)
         {
             ExecuteItem newItem = new ExecuteItem();
             newItem.sqlStr = sqlStr;
-            newItem.parameterList = (SqliteParameter[])parameters;
+            newItem.parameterList = (SqlParameter[])parameters;
             ExecuteList.Add(newItem);
         }
 
-        public string CreateSqlStr(string withParmSqlStr, IDataParameter[] parameters)
-        {
-            string sqlStr = withParmSqlStr;
-
-            foreach (var item in parameters)
-            {
-                //參數資料型態不為數字時轉換值須加引號
-                if (item.DbType != DbType.Int32)
-                {
-                    item.Value = "'" + item.Value + "'";
-                }
-
-                sqlStr = sqlStr.Replace(item.ParameterName, item.Value.ToString());
-            }
-
-            return sqlStr;
-        }
-
+        /// <summary>
+        /// 以交易方式依序執行SQL執行列表項目,發生錯誤時會RollBack至執行第一個項目前的狀態,無論有無成功均會清除SQL執行列表中的所有項目
+        /// </summary>
+        /// <returns></returns>
         public bool Execute()
         {
             bool result = false;
 
-            using (conn = new SqliteConnection(connectString))
+            using (conn = new SqlConnection(connectString))
             {
                 conn.Open();
                 cmd = conn.CreateCommand();
@@ -114,24 +92,30 @@ namespace WebBase.Models
                     throw ex;
                 }
             }
+
             result = true;
 
+            cmd.Dispose();
             ExecuteList.Clear();
 
             return result;
         }
 
+        /// <summary>
+        /// 依照SQL執行列表項目依序執行Query,並將結果存至DataSet
+        /// </summary>
+        /// <returns></returns>
         public DataSet Query()
         {
             DataSet ds = new DataSet();
 
-            using (conn = new SqliteConnection(connectString))
+            using (conn = new SqlConnection(connectString))
             {
                 conn.Open();
 
                 foreach (ExecuteItem item in ExecuteList)
                 {
-                    using (cmd = new SqliteCommand())
+                    using (cmd = new SqlCommand())
                     {
                         cmd.Connection = conn;
                         cmd.CommandText = item.sqlStr;

@@ -27,10 +27,11 @@ namespace WebBase.Controllers
         /// <param name="UserGuid"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public ActionResult ToHome(String UserGuid)
+        public ActionResult ToHome(string UserGuid, string SelectedLang)
         {
             Session["LoginGuid"] = Guid.NewGuid().ToString();
             Session["UserGuid"] = UserGuid;
+            Session["SelectedLang"] = SelectedLang; //儲存登入時選擇顯示的語系
 
             //儲存登入紀錄(及時,歷史)
             string clientIP = System.Web.HttpContext.Current.Request.UserHostAddress;
@@ -43,7 +44,7 @@ namespace WebBase.Controllers
                 parmObj.Add("GUID", Session["LoginGuid"].ToString());
                 parmObj.Add("INSERT_USER", "SYSTEM");
                 parmObj.Add("INSERT_TIME", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                parmObj.Add("USER_GUID", UserGuid);
+                parmObj.Add("USER_GUID", Session["UserGuid"].ToString());
                 parmObj.Add("CLIENT_IP", clientIP);
                 parmObj.Add("ACTION", "Login");
 
@@ -79,19 +80,24 @@ namespace WebBase.Controllers
             JObject result = new JObject();
 
             //1.授權驗證
-            if (DateTime.Now < License.StartDay)
+            if (License.Status != LiceneseStatus.Effective)
             {
-                result["loginFail"] = "LicenseNotYet";
-                return result;
-            }
-            if (DateTime.Now > License.EndDay)
-            {
-                result["loginFail"] = "LicenseExpire";
+                switch (License.Status)
+                {
+                    case LiceneseStatus.None:
+                        result["loginFail"] = "None";
+                        break;
+                    case LiceneseStatus.Invalid:
+                        result["loginFail"] = "Invalid";
+                        break;
+                }
+
                 return result;
             }
 
+            //2.IP無登入紀錄時檢查登入者是否超過人數
             string sqlStr = login.GetSqlStr("GetLoginInfoByIP");
-            var sqlParms = login.CreateParameterAry(
+            MySqlParameter[] sqlParms = (MySqlParameter[])login.CreateParameterAry(
                 new JObject() {
                     new JProperty("IP", HttpContext.Current.Request.UserHostAddress)
                 });
@@ -99,28 +105,27 @@ namespace WebBase.Controllers
             dao.AddExecuteItem(sqlStr, sqlParms);
             var ipCount = dao.Query().Tables[0].Rows[0][0].ToString();
 
-            var ipExist = int.Parse(ipCount) > 0 ? true : false ;
-            
-            //IP無登入紀錄時檢查登入者是否超過人數
+            var ipExist = int.Parse(ipCount) > 0 ? true : false;
+
             if (!ipExist)
             {
                 int SingInCount = (int)GetCurrentSingInCount(new JObject()).GetValue("SingInCount");
 
-                if(SingInCount + 1 > License.AllowQuantity)
+                if (SingInCount + 1 > License.AllowQuantity)
                 {
-                    result["loginFail"] = "overLimit";
+                    result["loginFail"] = "OverLimit";
                     return result;
                 }
             }
 
-            //2.帳號密碼驗證
+            //3.帳號密碼驗證
             InputDataProcessor processor = new InputDataProcessor();
             dbpassword = processor.TextEncryption(UserInfo.GetValue("Password").ToString());
 
             UserInfo["Password"] = dbpassword;
 
             sqlStr = login.GetSqlStr("LoginAuthenticator");
-            sqlParms = login.CreateParameterAry(UserInfo);
+            sqlParms = (MySqlParameter[])login.CreateParameterAry(UserInfo);
 
             dao.AddExecuteItem(sqlStr, sqlParms);
 
@@ -146,6 +151,49 @@ namespace WebBase.Controllers
             string SingInCount = dao.Query().Tables[0].Rows[0].ItemArray[0].ToString();
 
             result.Add("SingInCount", SingInCount);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 重讀已登入使用者資訊
+        /// </summary>
+        /// <returns></returns>
+        public JObject ReloadLoginUserInfo()
+        {
+            var session = HttpContext.Current.Session;
+            JObject result = new JObject();
+            Login sqlCreator = new Login();
+
+            //1.抓Session的登入資訊
+            string LoginUserGUID = session["UserGuid"].ToString();
+
+            if (!string.IsNullOrEmpty(LoginUserGUID))
+            {
+                result.Add("userGuid", LoginUserGUID);
+                result.Add("userLng", session["SelectedLang"].ToString());
+
+                //2.取得登入User的資訊
+                var sqlStr = sqlCreator.GetSqlStr("GetUserInfoByGuid");
+                dao.AddExecuteItem(sqlStr, sqlCreator.CreateParameterAry(new JObject {
+                    { "GUID", LoginUserGUID }
+                }));
+
+                var userInfo = dao.Query().Tables[0];
+
+                if (userInfo.Rows.Count > 0)
+                {
+                    //3.轉Json後回傳
+                    result.Add("userId", userInfo.Rows[0][0].ToString());
+                    result.Add("userName", userInfo.Rows[0][1].ToString());
+                    result.Add("depart", userInfo.Rows[0][2].ToString());
+                    result.Add("title", userInfo.Rows[0][3].ToString());
+                }
+            }
+            else
+            {
+
+            }
 
             return result;
         }

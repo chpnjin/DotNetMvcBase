@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>JQ MCS Login</title>
     <!--通用-->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/fontawesome-free-5.15.3-web-all.min.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/fontawesome-free-5.15.3-web-all.min.js"></script>
     <script src="~/Scripts/jim-logger-performance.js"></script>
-    @*<script src="~/Scripts/jim-errorHandler.js"></script>*@
+    @*<script src="~/Scripts/jq-errorHandler.js"></script>*@
     <!--本頁-->
     <link href="~/Content/jim-loginstyle.css" rel="stylesheet" />
 </head>
@@ -50,7 +50,7 @@
                             <label id="labelLangChoiceLabel">Language</label>
                         </div>
                         <div id="txtStatusMessage" class="login-error">
-                            
+
                         </div>
                         <div class="sub-btn">
                             <input type="button" id="btnSingIn" class="log" value="Sign In">
@@ -141,13 +141,13 @@
                     if (response.loginFail != null) {
 
                         switch (response.loginFail) {
-                            case "LicenseNotYet":
-                                $('#txtStatusMessage').text('登入失敗,授權尚未啟用');
+                            case "None":
+                                $('#txtStatusMessage').text('授權取得失敗,請檢查與授權主機之間的連線是否正常');
                                 break;
-                            case "LicenseExpire":
-                                $('#txtStatusMessage').text('登入失敗,授權已到期');
+                            case "Invalid":
+                                $('#txtStatusMessage').text('授權無效,請檢查授權檔案有效性(硬體資訊不吻合或非有效期限內)');
                                 break;
-                            case "overLimit":
+                            case "OverLimit":
                                 $('#txtStatusMessage').text('登入失敗,已超過授權人數');
                                 break;
                             default:
@@ -182,7 +182,10 @@
         function toHome(GUID) {
             $.ajax({
                 url: '../Login/ToHome',
-                data: { UserGuid: GUID },
+                data: {
+                    UserGuid: GUID,
+                    SelectedLang: sessionStorage.getItem('userLng')
+                },
                 type: "POST",
                 success: function (result) {
                     window.location.href = result.redirectToUrl;

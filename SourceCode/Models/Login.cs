@@ -80,6 +80,9 @@ namespace WebBase.Models
                 case "GetLoginInfoByIP":
                     sqlStr = GetLoginInfoByIP();
                     break;
+                case "GetUserInfoByGuid":
+                    sqlStr = GetLoginUserInfoByGuid();
+                    break;
                 default:
                     break;
             }
@@ -178,6 +181,25 @@ namespace WebBase.Models
         {
             string sqlStr = string.Empty;
             sqlStr += $"SELECT COUNT(*) FROM {login} WHERE CLIENT_IP = @IP;";
+
+            return sqlStr;
+        }
+
+        /// <summary>
+        /// 用User的GUID抓取登入者資訊
+        /// </summary>
+        /// <returns></returns>
+        private string GetLoginUserInfoByGuid()
+        {
+            string sqlStr = "SELECT U.ID,E.NAME ,D.NAME AS DEPART ,T.NAME AS TITLE ";
+            sqlStr += "FROM SYS_USER U ";
+            sqlStr += "LEFT JOIN HR_EMPLOYEE E ON E.GUID = U.EMPLOYEE_GUID ";
+            sqlStr += "LEFT JOIN HR_EMPLOYEE_DEPARTMENT ED ON ED.EMPLOYEE_GUID = E.GUID ";
+            sqlStr += "LEFT JOIN HR_EMPLOYEE_TITLE ET ON ET.EMPLOYEE_GUID = E.GUID ";
+            sqlStr += "LEFT JOIN HR_DEPARTMENT D ON D.GUID = ED.DEPARTMENT_GUID ";
+            sqlStr += "LEFT JOIN HR_TITLE T ON T.GUID = ET.TITLE_GUID ";
+            sqlStr += "WHERE U.ENABLE = 1 AND U.GUID = @GUID ";
+            sqlStr += "ORDER BY D.ID,T.ID LIMIT 1";
 
             return sqlStr;
         }

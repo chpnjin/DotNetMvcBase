@@ -9,6 +9,25 @@ using System.Web.Configuration;
 namespace WebBase.Global
 {
     /// <summary>
+    /// 授權狀態定義
+    /// </summary>
+    public enum LiceneseStatus
+    {
+        /// <summary>
+        /// 未取得
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// 有效
+        /// </summary>
+        Effective = 1,
+        /// <summary>
+        /// 無效
+        /// </summary>
+        Invalid = 2,
+    }
+
+    /// <summary>
     /// 授權內容
     /// </summary>
     public static class License
@@ -25,6 +44,10 @@ namespace WebBase.Global
         /// 可同時連線IP數量
         /// </summary>
         public static int AllowQuantity { get; set; }
+        /// <summary>
+        /// 授權狀態
+        /// </summary>
+        public static LiceneseStatus Status { get; set; }
     }
 
     /// <summary>
@@ -39,9 +62,15 @@ namespace WebBase.Global
         /// </summary>
         string LicenseSourceHost { get; set; }
 
+        /// <summary>
+        /// 建構式
+        /// </summary>
         public LicenseManager()
         {
-            License.AllowQuantity = -1;
+            License.StartDay = DateTime.MinValue;
+            License.EndDay = DateTime.MinValue;
+            License.AllowQuantity = 0;
+            License.Status = LiceneseStatus.None;
             LicenseSourceHost = WebConfigurationManager.AppSettings["LicenseSourceHostIP"];
         }
 
@@ -55,11 +84,6 @@ namespace WebBase.Global
             liceneseChecker.Interval = 1000 * 86400; //每24小時檢查一次
             liceneseChecker.Enabled = true;
 
-            //初始化
-            License.StartDay = DateTime.MinValue;
-            License.EndDay = DateTime.MinValue;
-            License.AllowQuantity = 0;
-
             GetLicense(new object(), null); //初始化時先抓一次
         }
 
@@ -67,50 +91,70 @@ namespace WebBase.Global
         /// 連線授權管理服務取得授權
         /// </summary>
         /// <returns></returns>
-        private void GetLicense(object sender, ElapsedEventArgs e)
+        async void GetLicense(object sender, ElapsedEventArgs e)
         {
-            TcpClient client = new TcpClient();
-
-            client.ReceiveTimeout = 5000;
-
-            try
+            //測試連線3次
+            for (int i = 0; i < 3; i++)
             {
-                IAsyncResult MyResult = client.BeginConnect(LicenseSourceHost, port, null, null);
-                MyResult.AsyncWaitHandle.WaitOne(3000, true); //等3秒
+                var client = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                client.ReceiveTimeout = 10000;
+                IAsyncResult tryConnectResult = client.BeginConnect(LicenseSourceHost, port, null, null);
+                tryConnectResult.AsyncWaitHandle.WaitOne(3000, true); //等3秒
 
-                if (!MyResult.IsCompleted || client.Connected == false)
+                if (!tryConnectResult.IsCompleted || client.Connected == false)
                 {
-                    //連線取得授權失敗(暫時關閉)
-                    License.StartDay = DateTime.MinValue;
-                    License.EndDay = DateTime.MaxValue;
-                    License.AllowQuantity = 65535;
+                    //作如果沒連上線的事
                 }
                 else if (client.Connected == true)
                 {
-                    //成功抓取授權資訊
-                    var stream = client.GetStream();
-                    byte[] msg = Encoding.UTF8.GetBytes("GetLicenese");
+                    //作連上線的事
+                    var stream = new NetworkStream(client);
+                    byte[] msg = Encoding.UTF8.GetBytes("GetLicense");
                     byte[] receive = new byte[256];
 
+                    //傳送授權請求並等待接收
                     stream.Write(msg, 0, msg.Length);
+                    var receiveLength = await stream.ReadAsync(receive, 0, receive.Length);
 
-                    System.Threading.Thread.Sleep(3000);
-
-                    int receiveLength = stream.Read(receive, 0, receive.Length);
                     string receiveMsg = Encoding.UTF8.GetString(receive, 0, receiveLength);
                     var licenese = receiveMsg.Split('|');
 
-                    License.StartDay = DateTime.Parse(licenese[0]);
-                    License.EndDay = DateTime.Parse(licenese[1]);
-                    License.AllowQuantity = int.Parse(licenese[2]);
-                }
-            }
-            catch (Exception)
-            {
+                    //驗證接收資訊是否正確,若錯誤將再次請求
+                    if (licenese.Length != 4)
+                    {
+                        client.Close();
+                        continue;
+                    }
 
-            }
-            finally
-            {
+                    bool IsCorrectHardware = bool.Parse(licenese[0].ToString());
+                    License.StartDay = DateTime.Parse(licenese[1]);
+                    License.EndDay = DateTime.Parse(licenese[2]);
+                    License.AllowQuantity = int.Parse(licenese[3]);
+
+                    //授權安裝硬體資訊不匹配
+                    if (!IsCorrectHardware)
+                    {
+                        License.Status = LiceneseStatus.Invalid;
+                        break;
+                    }
+
+                    //不在授權有效期限
+                    if (DateTime.Today >= License.StartDay && DateTime.Today <= License.EndDay)
+                    {
+                        License.Status = LiceneseStatus.Effective;
+                    }
+                    else
+                    {
+                        License.Status = LiceneseStatus.Invalid;
+                    }
+
+                    break;
+                }
+                //連線失敗時
+                License.StartDay = DateTime.MinValue;
+                License.EndDay = DateTime.MinValue;
+                License.AllowQuantity = 0;
+
                 client.Close();
             }
         }
@@ -118,9 +162,9 @@ namespace WebBase.Global
         /// <summary>
         /// 釋放啟用主機名額
         /// </summary>
-        public void ReleaseLicense()
+        public void Release()
         {
-            TcpClient client = new TcpClient();
+            var client = new Socket(SocketType.Stream, ProtocolType.Tcp);
 
             IAsyncResult MyResult = client.BeginConnect(LicenseSourceHost, port, null, null);
             MyResult.AsyncWaitHandle.WaitOne(3000, true); //等3秒
@@ -132,7 +176,7 @@ namespace WebBase.Global
             else if (client.Connected == true)
             {
                 //作連上線的事
-                var stream = client.GetStream();
+                var stream = new NetworkStream(client);
                 byte[] msg = Encoding.UTF8.GetBytes("Release");
                 byte[] receive = new byte[256];
 

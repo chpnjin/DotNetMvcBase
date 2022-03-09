@@ -36,6 +36,11 @@ namespace WebBase.Controllers
             string removeLogin = sqlCreator.GetSqlStr("ClearLoginInfo");
             string saveLogout = sqlCreator.GetSqlStr("SaveLogoutInfo");
 
+            if (Session.Count == 0)
+            {
+                return Json(new { redirectToUrl = Url.Action("Index", "Login") });
+            }
+
             if (LoginGuid is null)
             {
                 LoginGuid = Session["LoginGuid"].ToString();
@@ -68,7 +73,7 @@ namespace WebBase.Controllers
 
             dao.Execute();
 
-            if(Session is not null)
+            if (Session is not null)
             {
                 Session.Clear();
             }
@@ -96,14 +101,16 @@ namespace WebBase.Controllers
     public class LayoutController : ApiController
     {
         [HttpPost]
-        public JArray GetSideBarItems(JObject obj)
+        public JArray GetSideBarItems()
         {
+            JObject obj = new JObject();
             GroupUser groupUser = new GroupUser();
             SYS_FUNCTION function = new SYS_FUNCTION();
             DataTableExtensions extensions = new DataTableExtensions();
-            MySQL dao = new MySQL();
+            IDAO dao = new MySQL();
 
             //1.使用者找所屬群組
+            obj.Add("USER_GUID", HttpContext.Current.Session["UserGuid"].ToString());
             var userGuid = groupUser.CreateParameterAry(obj);
             var getGroupsSql = groupUser.GetGroupsByUser();
             dao.AddExecuteItem(getGroupsSql, userGuid);
@@ -125,14 +132,16 @@ namespace WebBase.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JObject GetFrontOfficeDropDownItems(JObject obj)
+        public JObject GetFrontOfficeDropDownItems()
         {
+            JObject obj = new JObject();
             GroupUser groupUser = new GroupUser();
             GroupNavigation groupNavigation = new GroupNavigation();
             DataTableExtensions extensions = new DataTableExtensions();
-            MySQL dao = new MySQL();
+            IDAO dao = new MySQL();
 
             //1.使用者找所屬群組
+            obj.Add("USER_GUID", HttpContext.Current.Session["UserGuid"].ToString());
             var userGuid = groupUser.CreateParameterAry(obj);
             var getGroupsSql = groupUser.GetGroupsByUser();
             dao.AddExecuteItem(getGroupsSql, userGuid);

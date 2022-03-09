@@ -61,9 +61,9 @@ namespace WebBase.Global
 
             ThreadContext.Properties["addr"] = ip;
             logger.Error("API URL:" + url + " / 錯誤內容:" + msg.ReturnMessage);
-            
+
             context.Result = msg;
-            
+
         }
     }
 }

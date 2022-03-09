@@ -25,7 +25,7 @@ let hndIdleDetect = setInterval(function () {
     if (idleCounter > idleLimit) {
         clearInterval(hnd);
         clearInterval(hndIdleDetect);
-        MsgBox(
+        JQMessageBox(
             globalDoc.getTextByKey('prompt'),
             globalDoc.getTextByKey('idleTimeout'),
             { 'Y': globalDoc.getTextByKey('ok') },
@@ -33,6 +33,31 @@ let hndIdleDetect = setInterval(function () {
         );
     }
 }, 1000);
+
+//檢查登入資訊
+let checkLoginStatus = new Promise((resolve) => {
+    //判斷是否儲存登入者GUID (同Session分頁瀏覽用)
+    let loginGuid = sessionStorage.getItem('userGuid');
+
+    if (loginGuid == null) {
+        $.ajax({
+            type: "POST",
+            url: "../api/ApiLogin/ReloadLoginUserInfo",
+            dataType: "json",
+            success: function (userInfo) {
+                sessionStorage.setItem("userGuid", userInfo.userGuid);
+                sessionStorage.setItem("userId", userInfo.userId);
+                sessionStorage.setItem("userName", userInfo.userName);
+                sessionStorage.setItem("depart", userInfo.depart);
+                sessionStorage.setItem("title", userInfo.title);
+                sessionStorage.setItem("userLng", userInfo.userLng);
+                resolve(loginGuid);
+            }
+        });
+    } else {
+        resolve(loginGuid);
+    }
+});
 
 //登出
 function logout(btnVal) {
@@ -54,10 +79,10 @@ async function getGlobalParam() {
         url: 'api/Global/GetGlobalParam',
         dataType: 'json',
         success: function (data) {
-            $.each(data.rows, function (index, obj) {
+            $.each(data, function (key, value) {
                 let elm = document.createElement('input');
 
-                switch (obj.Key) {
+                switch (key) {
                     case 'DateFormat': //日期格式
                         elm.setAttribute('id', 'dateFormat');
                         break;
@@ -72,7 +97,7 @@ async function getGlobalParam() {
                         break;
                     default:
                 }
-                elm.setAttribute('value', obj.Value);
+                elm.setAttribute('value', value);
                 elm.hidden = true;
 
                 document.body.appendChild(elm);
@@ -88,7 +113,6 @@ async function getLeftNavbarItems() {
     return await $.ajax({
         type: 'POST',
         url: '../api/Layout/GetSideBarItems',
-        data: { 'USER_GUID': sessionStorage.getItem('userGuid') },
         dataType: 'json',
         success: function (json) {
             layoutLeftNavbar(json);
@@ -270,7 +294,6 @@ function getNavigationItems() {
     $.ajax({
         type: 'POST',
         url: '../api/Layout/GetFrontOfficeDropDownItems',
-        data: { 'USER_GUID': sessionStorage.getItem('userGuid') },
         dataType: 'json',
         success: function (response) {
             let dropdownMenu = document.getElementById('dropdownFrontOffice');
@@ -388,7 +411,7 @@ function downloadHelpFile() {
             console.info(response);
 
             if (response.filePath == null) {
-                MsgBox(
+                JQMessageBox(
                     globalDoc.getTextByKey('prompt'),
                     layoutDoc.getTextByKey('noHelpFile'),
                     { 'ok': globalDoc.getTextByKey('ok') },
@@ -410,28 +433,28 @@ $(document).ready(async function () {
     await getGlobalParam();
     await getLeftNavbarItems();
 
-    let lng = sessionStorage.getItem('userLng');
-
-    //切換顯示語言
-    layoutDoc = new Doc('layout', lng);
-    layoutDoc.searchFile().then((val) => {
+    //檢查登入人員資訊後顯示
+    await checkLoginStatus.then(() => {
+        let lng = sessionStorage.getItem('userLng');
+        layoutDoc = new Doc('layout', lng);
+        saveLoginInfo();
+        showUserInfo();
+        //切換顯示語言
+        return layoutDoc.searchFile();
+    }).then((val) => {
         layoutDoc.converStaticElm('top-bar');
         layoutDoc.converStaticElm('left-nav');
         layoutDoc.converStaticElm('right-tab');
         getNavigationItems();
-
         return getCurrentFunc();
     }).then((val) => {
         return highlightCurrentNavItem();
     }).then((val) => {
         return getBreadcrumb();
+    }).then((val) => {
+        let lng = sessionStorage.getItem('userLng');
+        globalDoc = new Doc('global', lng);
+        globalDoc.searchFile();
+        eventBind();
     });
-
-    //讀取通用元件專用語言檔
-    globalDoc = new Doc('global', lng);
-    globalDoc.searchFile();
-
-    eventBind();
-    saveLoginInfo();
-    showUserInfo();
 });

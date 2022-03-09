@@ -11,6 +11,7 @@ using System.Web.Routing;
 using WebBase.Controllers;
 using WebBase.Global;
 using Newtonsoft.Json.Linq;
+using System.Web.SessionState;
 
 namespace WebBase
 {
@@ -26,6 +27,20 @@ namespace WebBase
             //引用log4net的config
             string log4netPath = Server.MapPath("~/log4net.config");
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(log4netPath));
+
+            LicenseManager manager = new LicenseManager();
+            manager.Startup();
+        }
+
+        /// <summary>
+        /// 啟用 Web API 可讀取Session
+        /// </summary>
+        protected void Application_PostAuthorizeRequest()
+        {
+            if (HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/api"))
+            {
+                HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+            }
         }
 
         /// <summary>
@@ -51,7 +66,7 @@ namespace WebBase
         protected void Application_End(object sender, EventArgs e)
         {
             LicenseManager manager = new LicenseManager();
-            manager.ReleaseLicense();
+            manager.Release();
         }
     }
 }

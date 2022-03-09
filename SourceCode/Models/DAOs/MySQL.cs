@@ -66,58 +66,40 @@ namespace WebBase.Models
         {
             bool result = false;
 
-            try
+            using (conn = new MySqlConnection(connectString))
             {
-                using (conn = new MySqlConnection(connectString))
-                {
-                    conn.Open();
-                    cmd = conn.CreateCommand();
-                    cmd.Connection = conn;
-                    cmd.Transaction = conn.BeginTransaction();
+                conn.Open();
+                cmd = conn.CreateCommand();
+                cmd.Connection = conn;
+                cmd.Transaction = conn.BeginTransaction();
 
-                    try
+                try
+                {
+                    //逐筆執行佇列中內容
+                    foreach (ExecuteItem item in ExecuteList)
                     {
-                        //逐筆執行佇列中內容
-                        foreach (ExecuteItem item in ExecuteList)
+                        cmd.CommandText = item.sqlStr;
+                        if (item.parameterList is not null)
                         {
-                            cmd.CommandText = item.sqlStr;
-                            if (item.parameterList is not null)
-                            {
-                                cmd.Parameters.AddRange(item.parameterList.ToArray());
-                            }
-
-                            cmd.ExecuteNonQuery();
-                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddRange(item.parameterList.ToArray());
                         }
-                        cmd.Transaction.Commit();
+
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
                     }
-                    catch (Exception ex)
-                    {
-                        cmd.Transaction.Rollback();
-                        throw ex;
-                    }
+                    cmd.Transaction.Commit();
                 }
-                result = true;
-            }
-            catch (Exception ex)
-            {
-                result = false;
-                //將Exception傳至上層由ExceptionHandler統一處理
-                if (ex.InnerException != null)
+                catch (Exception ex)
                 {
-                    throw new CustomException(ex.InnerException);
-                }
-                else
-                {
-                    throw new CustomException(ex);
+                    cmd.Transaction.Rollback();
+                    throw ex;
                 }
             }
-            finally
-            {
-                cmd.Dispose();
-                ExecuteList.Clear();
-                if (conn.State != ConnectionState.Closed) conn.Close();
-            }
+
+            cmd.Dispose();
+            ExecuteList.Clear();
+
+            result = true;
 
             return result;
         }
@@ -130,53 +112,35 @@ namespace WebBase.Models
         {
             DataSet ds = new DataSet();
 
-            try
+            using (conn = new MySqlConnection(connectString))
             {
-                using (conn = new MySqlConnection(connectString))
+                conn.Open();
+
+                foreach (ExecuteItem item in ExecuteList)
                 {
-                    conn.Open();
-
-                    foreach (ExecuteItem item in ExecuteList)
+                    using (cmd = new MySqlCommand())
                     {
-                        using (cmd = new MySqlCommand())
+                        cmd.Connection = conn;
+                        cmd.CommandText = item.sqlStr;
+                        cmd.Parameters.Clear();
+
+                        if (item.parameterList is not null)
                         {
-                            cmd.Connection = conn;
-                            cmd.CommandText = item.sqlStr;
-                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddRange(item.parameterList);
+                        }
 
-                            if (item.parameterList is not null)
-                            {
-                                cmd.Parameters.AddRange(item.parameterList);
-                            }
+                        using (IDataReader dr = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
+                        {
+                            DataTable dt = new DataTable();
 
-                            using (IDataReader dr = cmd.ExecuteReader(CommandBehavior.SequentialAccess))
-                            {
-                                DataTable dt = new DataTable();
-
-                                dt.Load(dr);
-                                ds.Tables.Add(dt);
-                            }
+                            dt.Load(dr);
+                            ds.Tables.Add(dt);
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                //將Exception傳至上層由ExceptionHandler統一處理
-                if (ex.InnerException != null)
-                {
-                    throw new CustomException(ex.InnerException);
-                }
-                else
-                {
-                    throw new CustomException(ex);
-                }
-            }
-            finally
-            {
-                ExecuteList.Clear();
-                if (conn.State != ConnectionState.Closed) conn.Close();
-            }
+
+            ExecuteList.Clear();
 
             return ds;
         }

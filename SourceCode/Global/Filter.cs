@@ -25,7 +25,12 @@ namespace WebBase.Global
         }
     }
 
-    public class ReturnFilter : System.Web.Http.Filters.ActionFilterAttribute {
+    public class ReturnFilter : System.Web.Http.Filters.ActionFilterAttribute
+    {
+        /// <summary>
+        /// API請求驗證
+        /// </summary>
+        /// <param name="actionContext"></param>
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             string action = actionContext.Request.RequestUri.LocalPath;
@@ -41,27 +46,10 @@ namespace WebBase.Global
 
             if (!nonVerify.Contains(action))
             {
-                var licenseStatus = HttpContext.Current.Application.Get("LicenseStatus");
-
-                if (licenseStatus == null)
+                //授權無效回傳錯誤
+                if (License.Status == LiceneseStatus.Invalid)
                 {
-                    LicenseManager license = new LicenseManager();
-                    license.Startup();
-                }
-
-                //等待抓到網站授權狀態再往下執行
-                while (licenseStatus == null)
-                {
-                    licenseStatus = HttpContext.Current.Application.Get("LicenseStatus");
-                }
-
-                if (licenseStatus.ToString() != "true")
-                {
-                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                }
-                else
-                {
-
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 }
             }
         }
@@ -90,17 +78,17 @@ namespace WebBase.Global
 
             if (!nonVerify.Contains(action))
             {
-                var licenseStatus = HttpContext.Current.Application.Get("LicenseStatus");
-
-                if (licenseStatus == null)
-                {
-                    LicenseManager license = new LicenseManager();
-                    license.Startup();
-                }
-
                 //無登入紀錄直接重新導向登入頁
                 if (filterContext.HttpContext.Session["LoginGuid"] == null)
                 {
+                    filterContext.Result = new RedirectResult("/Login");
+                    return;
+                }
+
+                //授權無效直接登出
+                if (License.Status == LiceneseStatus.Invalid)
+                {
+                    filterContext.HttpContext.Session.Clear();
                     filterContext.Result = new RedirectResult("/Login");
                     return;
                 }
